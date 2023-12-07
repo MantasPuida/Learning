@@ -3,6 +3,7 @@ using Learning.API.Models.Domain;
 using Learning.API.Models.DTOs.Region;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Learning.API.Controllers
 {
@@ -18,12 +19,12 @@ namespace Learning.API.Controllers
         }
 
         [HttpGet] 
-        public IActionResult GetRegions()
+        public async Task<IActionResult> GetRegions()
         {
-            List<Region> regions = dbContext.Regions.ToList();
+            List<Region> regionsDomain = await dbContext.Regions.ToListAsync();
 
             var regionsDto = new List<RegionDto>();
-            foreach (var region in regions)
+            foreach (var region in regionsDomain)
             {
                 regionsDto.Add(new RegionDto(region.Id, region.Code, region.Name, region.RegionImgUrl));
             }
@@ -33,11 +34,9 @@ namespace Learning.API.Controllers
 
         [HttpGet]
         [Route("{id:Guid}")]
-        public IActionResult GetRegion([FromRoute] Guid id) 
+        public async Task<IActionResult> GetRegion([FromRoute] Guid id) 
         {
-            //var region = dbContext.Regions.Find(id);
-
-            var region = dbContext.Regions.FirstOrDefault(x => x.Id == id);
+            var region = await dbContext.Regions.FirstOrDefaultAsync(x => x.Id == id);
 
             if (region == null)
             {
@@ -50,7 +49,7 @@ namespace Learning.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateRegion([FromBody] CreateRegionDto createRegionDto)
+        public async Task<IActionResult> CreateRegion([FromBody] CreateRegionDto createRegionDto)
         {
             var region = new Region
             {
@@ -59,8 +58,8 @@ namespace Learning.API.Controllers
                 Code = createRegionDto.Code
             };
 
-            dbContext.Regions.Add(region);
-            dbContext.SaveChanges();
+            await dbContext.Regions.AddAsync(region);
+            await dbContext.SaveChangesAsync();
 
             var regionDto = new RegionDto(region.Id, region.Code, region.Name, region.RegionImgUrl);
 
@@ -69,9 +68,9 @@ namespace Learning.API.Controllers
 
         [HttpPut]
         [Route("{id:guid}")]
-        public IActionResult UpdateRegion([FromRoute] Guid id, [FromBody] UpdateRegionDto updateRegionDto)
+        public async Task<IActionResult> UpdateRegion([FromRoute] Guid id, [FromBody] UpdateRegionDto updateRegionDto)
         {
-            var regionDomainModel = dbContext.Regions.FirstOrDefault(x => x.Id == id);
+            var regionDomainModel = await dbContext.Regions.FirstOrDefaultAsync(x => x.Id == id);
 
             if (regionDomainModel == null)
             {
@@ -82,7 +81,7 @@ namespace Learning.API.Controllers
             regionDomainModel.Name = updateRegionDto.Name;
             regionDomainModel.RegionImgUrl = updateRegionDto.RegionImgUrl;
 
-            dbContext.SaveChanges();
+            await dbContext.SaveChangesAsync();
 
             var regionDto = new RegionDto(regionDomainModel.Id, regionDomainModel.Code, regionDomainModel.Name, regionDomainModel.RegionImgUrl);
 
@@ -91,9 +90,9 @@ namespace Learning.API.Controllers
 
         [HttpDelete]
         [Route("{id:Guid}")]
-        public IActionResult DeleteRegion([FromRoute] Guid id)
+        public async Task<IActionResult> DeleteRegion([FromRoute] Guid id)
         {
-            var regionDomainModel = dbContext.Regions.FirstOrDefault(x => x.Id == id);
+            var regionDomainModel = await dbContext.Regions.FirstOrDefaultAsync(x => x.Id == id);
 
             if (regionDomainModel == null)
             {
@@ -101,7 +100,7 @@ namespace Learning.API.Controllers
             }
 
             dbContext.Regions.Remove(regionDomainModel); 
-            dbContext.SaveChanges();
+            await dbContext.SaveChangesAsync();
 
             return Ok();
         }
