@@ -135,3 +135,5 @@ C:\Users\MantasP\Desktop\Files\code\Learning\Learning APIs\Learning.API\bin\Debu
 C:\Users\MantasP\Desktop\Files\code\Learning\Learning APIs\Learning.API\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\MantasP\Desktop\Files\code\Learning\Learning APIs\Learning.API\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
 C:\Users\MantasP\Desktop\Files\code\Learning\Learning APIs\Learning.API\obj\Debug\net8.0\Learning.API.sourcelink.json
+C:\Users\MantasP\Desktop\Files\code\Learning\Learning APIs\Learning.API\bin\Debug\net8.0\AutoMapper.dll
+C:\Users\MantasP\Desktop\Files\code\Learning\Learning APIs\Learning.API\bin\Debug\net8.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
