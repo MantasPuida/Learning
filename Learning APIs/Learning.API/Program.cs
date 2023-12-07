@@ -1,4 +1,6 @@
 using Learning.API.Data;
+using Learning.API.Mappings;
+using Learning.API.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +13,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<LearningDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("LearningConnectionString")));
+builder.Services.AddScoped<IRegionsRepository, RegionsRepository>();
+builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 
 var app = builder.Build();
 
