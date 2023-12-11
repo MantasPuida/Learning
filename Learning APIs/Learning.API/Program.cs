@@ -14,6 +14,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<LearningDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("LearningConnectionString")));
 builder.Services.AddScoped<IRegionsRepository, RegionsRepository>();
+builder.Services.AddScoped<IWalksRepository, WalksRepository>();
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 
 var app = builder.Build();
