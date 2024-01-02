@@ -13,13 +13,11 @@ namespace Learning.API.Controllers
     [ApiController]
     public class RegionsController : ControllerBase
     {
-        private readonly LearningDbContext dbContext;
         private readonly IRegionsRepository regionsRepository;
         private readonly IMapper mapper;
 
-        public RegionsController(LearningDbContext dbContext, IRegionsRepository regionsRepository, IMapper mapper)
+        public RegionsController(IRegionsRepository regionsRepository, IMapper mapper)
         {
-            this.dbContext = dbContext;
             this.regionsRepository = regionsRepository;
             this.mapper = mapper;
         }
@@ -78,7 +76,6 @@ namespace Learning.API.Controllers
         public async Task<IActionResult> DeleteRegion([FromRoute] Guid id)
         {
             var regionDomainModel = await regionsRepository.DeleteRegionAsync(id);
-
             if (regionDomainModel == null)
             {
                 return NotFound();
